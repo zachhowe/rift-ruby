@@ -21,11 +21,12 @@ The goal of this project is to develop a complete interface for Trion World's RI
 * List characeters on the account
 * Look for available scratch off points
 * Determine time remaining until next scratch off card (every hour you get a new one, accumulating up to only six at a time)
-* Actually automate the scratch off process including: replaying and redeeming rewards. (Limited to the first type of scratch off, "Planar Rewards")
+* Actually automate the scratch off process including: replaying and redeeming rewards. (Limited to the first type of scratch off, "Planar Rewards" (aka "matchthree"))
 
 Although these features are planned, **currently it cannot**:
 
 * Be run without a proxy (*details further down this document*)
+* Be more supportive in case of an error and proper error handling
 * Listen to guild chat
 * Send messages to guild chat
 * Do more scratch offs than the "Planar Rewards" scratch off type.
