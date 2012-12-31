@@ -13,7 +13,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ---
 
-The goal of this project is to develop a complete interface for Trion World's RIFT Mobile App API. 
+The goal of this project is to develop a complete interface for Trion World's RIFT Mobile App API. Currently in a very primitive state.
 
 **Currently it can**:
 
