@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Match Three Lootable</title>
+    <meta charset="UTF-8" />
+
+        <script type="text/javascript">
+
+    function getAllRegions()
+    {
+        return '[{\"x\":334,\"y\":125,\"w\":160,\"h\":160},{\"x\":475,\"y\":125,\"w\":160,\"h\":160},{\"x\":614,\"y\":125,\"w\":160,\"h\":160},{\"x\":334,\"y\":260,\"w\":160,\"h\":160},{\"x\":475,\"y\":260,\"w\":160,\"h\":160},{\"x\":614,\"y\":260,\"w\":160,\"h\":160},{\"x\":334,\"y\":399,\"w\":160,\"h\":160},{\"x\":475,\"y\":399,\"w\":160,\"h\":160},{\"x\":614,\"y\":399,\"w\":160,\"h\":160}]';
+    }
+
+    function getWinRegions()
+    {
+        return '[[{\"x\":475,\"y\":125,\"w\":160,\"h\":160}]]';
+    }
+
+    function getCardData()
+    {
+        return '[[{\"x\":475,\"y\":125,\"w\":160,\"h\":160}]]' + '\n' + getReplayUrl() + '\n' + getRedeemUrl();
+    }
+
+
+    function getReplayUrl()
+    {
+        return '/chatservice/scratch/matchthree?characterId=214483932618244823&replayUUID=015a9a07-1b71-43e8-ae4b-c49fe9bce7b8';
+    }
+
+    function getRedeemUrl()
+    {
+        return '';
+    }
+
+    function showLayer(name, show)
+    {
+        var layer = document.getElementById(name);
+        if(layer)
+        {
+            if(show)
+                layer.style.display = 'block';
+            else
+                layer.style.display = 'none';
+        }
+    }
+
+    function findYPos(obj)
+    {
+        var top = 0;
+        if(obj.offsetParent)
+        {
+            while(1)
+            {
+              top += obj.offsetTop;
+              if(!obj.offsetParent)
+                break;
+              obj = obj.offsetParent;
+            }
+        }
+        else if(obj.y)
+        {
+            top += obj.y;
+        }
+        return top;
+      }
+        
+    function scrollToElement(name)
+    {
+        var layer = document.getElementById(name);
+        if(layer)
+        {
+            scrollTo(0, findYPos(layer) * document.body.style.zoom);
+        }
+    }
+
+    function showMaskLayer()
+    {
+        scrollToElement('card-mask');
+        return true;
+    }
+
+    function showRewardLayer()
+    {
+        scrollToElement('reward-layer');
+        return true;
+    }
+
+    </script>
+
+    <style type="text/css">
+        body {
+            background-color: transparent;
+            height: 2560px;
+            font-family: Helvetica;
+        }
+
+        #card-background,
+        #card-symbols,
+        #card-mask
+        {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #card-mask {
+            top: 640px;
+        }
+
+        .card-symbol
+        {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+        }
+
+        .card-symbol img {
+            display: block;
+            margin: 0 auto;
+            width: 120px;
+            height: 120px;
+        }
+
+        .card-prize
+        {
+            position: absolute;
+            width: 120px;
+            height: 100px;
+            left: 785px;
+            color: white;
+        }
+
+        .card-prize .icon
+        {
+            display: block;
+            width: 64px;
+            height: 64px;
+            margin: 0 auto;
+
+            position: absolute;
+            top: 5px;
+            left: 27px;
+        }
+
+        .card-prize .icon-overlay
+        {
+            display: block;
+            width: 89px;
+            height: 89px;
+            margin: 0 auto;
+
+            position: absolute;
+            top: -7px;
+            left: 15px;
+        }
+
+        .card-prize .prize-name
+        {
+            position: absolute;
+            text-align: center;
+            width: 100%;
+            left: 0px;
+            top: 77px;
+            height: 40px;
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        .card-prize .quantity
+        {
+            position: absolute;
+            text-align: right;
+            right: 33px;
+            bottom: 30px;
+            font-weight: bold;
+            font-size: 16pt;
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        .col-1 {
+            left: 354px;
+        }
+        .col-2 {
+            left: 495px;
+        }
+        .col-3 {
+            left: 634px;
+        }
+        .row-1 {
+            top: 145px;
+        }
+        .row-2 {
+            top: 280px;
+        }
+        .row-3 {
+            top: 419px;
+        }
+
+        /*******************************************************/
+
+        /* prize styles */
+
+        #reward-layer {
+            position: absolute;
+
+            width: 960px;
+            height: 640px;
+
+            top: 1280px;
+            left: 0px;
+
+            background-color: #143b3d;
+
+            text-align: center;
+        }
+
+        .winning-card-prizes {
+            position: absolute;
+            left: 78px;
+            top: 100px;
+            width: 802px;
+            background-repeat: no-repeat;
+            background-image: url(/chatservice/images/lootcard/en/redeem_prize_bg_top.png);
+        }
+
+        .winning-card-prizes.prize-count-1 {
+            top: 190px;
+        }
+
+        .winning-card-prizes.prize-count-2 {
+            top: 150px;
+        }
+
+        .winning-card-prizes .top {
+            left: 0;
+            top: 0;
+            height: 34px;
+        }
+
+        .winning-card-prizes .bottom {
+            background-image: url(/chatservice/images/lootcard/en/redeem_prize_bg_bottom.png);
+            background-repeat: repeat-y;
+            height: 34px;
+            width: 100%;
+            bottom: 0px;
+        }
+
+        .winning-card-prize {
+            position: relative;
+            background-image: url(/chatservice/images/lootcard/en/redeem_prize_bg_fill.png);
+            background-repeat: repeat-y;
+
+            width: 802px;
+            height: 100px;
+        }
+
+        .winning-card-prize .multiplier {
+            position: absolute;
+
+            top: 0px;
+            left: 44px;
+            width: 147px;
+            height: 147px;
+        }
+
+        .winning-card-prize img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .multiplier .multiplier-text {
+            position: absolute;
+            top: 28px;
+            left: -2px;
+            vertical-align: center;
+            width: 100%;
+            text-align: center;
+
+            font-size: 30pt;
+            color: #f8eb8a;
+        }
+
+        .reward-text {
+            position: absolute;
+            top: 30px;
+            left: 4px;
+            width: 100%;
+            font-size: 32pt;
+            white-space: nowrap;
+            text-transform: uppercase;
+            color: white;
+        }
+
+        .winning-card-prize .icon {
+            position: absolute;
+            left: 203px;
+            top: 5px;
+            width: 90px;
+            height: 90px;
+        }
+
+        .winning-card-prize .icon-overlay {
+            position: absolute;
+            left: 190px;
+            top: -10px;
+            width: 119px;
+            height: 119px;
+        }
+
+        .winning-card-prize .prize-name {
+            position: absolute;
+            left: 330px;
+            width: 346px;
+            font-size: 22pt;
+            text-align: left;
+        }
+
+        #reward-layer .mail-icon {
+            position: absolute;
+            left: 730px;
+            top: 488px;
+        }
+
+        #reward-layer .delivery-text {
+            font-size: 16pt;
+            color: white;
+            position: absolute;
+            top: 533px;
+            width: 478px;
+            left: 255px;
+            text-align: right;
+        }
+
+        /*******************************************************/
+
+        #debug {
+            font-size: 200%;
+            color: blue;
+            position: absolute;
+            left: 1025px;
+        }
+
+        .debug {
+            font-size: 200%;
+            color: blue;
+            position: absolute;
+            left: 1025px;
+        }
+
+    </style>
+    <link rel="stylesheet" type="text/css" href="/chatservice/css/scratchcard.css" />
+</head>
+<body>
+
+<div id="card-background">
+    <img src="/chatservice/images/lootcard/en/card-background.jpg" />
+</div>
+
+<div id="card-symbols">
+
+    <div class="card-symbol col-1 row-1">
+        <img src="/chatservice/images/invasion/icon_earth_gem.png" />
+    </div>
+    <div class="card-symbol col-2 row-1">
+        <img src="/chatservice/images/invasion/en/replay.png" />
+    </div>
+    <div class="card-symbol col-3 row-1">
+        <img src="/chatservice/images/invasion/icon_air_feather.png" />
+    </div>
+
+    <div class="card-prize prize-1 row-1">
+        <img class="icon" src="/chatservice/images/icons/titan_shards_b.png" />
+        <img class="icon-overlay" src="/chatservice/images/lootcard/icon_border.png" />
+        <span class="prize-name rarity-30">Adrenalite Shard</span>
+    </div>
+
+    <div class="card-symbol col-1 row-2">
+        <img src="/chatservice/images/invasion/icon_fire_flame.png" />
+    </div>
+    <div class="card-symbol col-2 row-2">
+        <img src="/chatservice/images/invasion/icon_life_flower.png" />
+    </div>
+    <div class="card-symbol col-3 row-2">
+        <img src="/chatservice/images/invasion/icon_earth_gem.png" />
+    </div>
+
+    <div class="card-prize prize-2 row-2">
+        <img class="icon" src="/chatservice/images/icons/planarite_orb_b.png" />
+            <span class="quantity">5</span>
+        <img class="icon-overlay" src="/chatservice/images/lootcard/icon_border.png" />
+        <span class="prize-name rarity-20">Planarite</span>
+    </div>
+
+    <div class="card-symbol col-1 row-3">
+        <img src="/chatservice/images/invasion/icon_water_shell.png" />
+    </div>
+    <div class="card-symbol col-2 row-3">
+        <img src="/chatservice/images/invasion/icon_fire_flame.png" />
+    </div>
+    <div class="card-symbol col-3 row-3">
+        <img src="/chatservice/images/invasion/icon_fire_flame.png" />
+    </div>
+
+    <div class="card-prize prize-3 row-3">
+        <img class="icon" src="/chatservice/images/icons/sourcestone_04.png" />
+        <img class="icon-overlay" src="/chatservice/images/lootcard/icon_border.png" />
+        <span class="prize-name rarity-100">Corrupted Sourcestone</span>
+    </div>
+</div>
+
+<div id="reward-layer">
+    <span class="reward-text"><a href="/chatservice/scratch/matchthree?characterId=214483932618244823&amp;replayUUID=015a9a07-1b71-43e8-ae4b-c49fe9bce7b8">Bonus Card</a></span>
+</div>
+
+<div id="debug">
+    <a href="#" onClick="javascript: showRewardLayer(); return false;">Show Rewards</a>
+    <a href="#" onClick="javascript: showMaskLayer(); return false;">Show Mask</a>
+</div>
+
+<div id="card-mask">
+    <img src="/chatservice/images/lootcard/en/card-mask.png" />
+</div>
+
+</body>
+</html>

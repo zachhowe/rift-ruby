@@ -113,8 +113,8 @@ module Rift
 
         url = get_url(response.body)
 
-        if url != nil
-          if url.index('replayUUID') == nil
+        if !url.nil?
+          if url.index('replayUUID').nil?
             puts "Claiming your rewards!"
             redeem(url)
           else
@@ -155,7 +155,7 @@ module Rift
         end
       end
 
-      return nil
+      nil
     end
   end
 end
