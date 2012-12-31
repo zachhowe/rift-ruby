@@ -6,7 +6,7 @@ include Rift
 email = ARGV[0]
 password = ARGV[1]
 character_id = ARGV[2]
-scratch_offs_to_do = eval(ARGV[3])
+scratch_offs_to_do = ARGV[3]
 
 if !email.nil? && !password.nil?
   r = RiftClient.new
@@ -23,7 +23,7 @@ if !email.nil? && !password.nil?
   scratch_offs = 1
 
   if !scratch_offs_to_do.nil?
-    scratch_offs = [availablePoints, scratch_offs_to_do].min
+    scratch_offs = [availablePoints, eval(scratch_offs_to_do)].min
   end
 
   if !character_id.nil?
