@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require './lib/rift_client.rb'
+require_relative '../lib/rift_client'
 include Rift
 
 email = ARGV[0]
@@ -43,7 +43,7 @@ if !email.nil? && !password.nil?
     end
   end
 else
-  puts "usage: rift_scratch_offs.rb [email] [password] [character_id = 0] [scratch_offs_to_do = 1]"
+  puts "usage: rift_scratch_offs.rb [email] [password] [character_id = nil] [scratch_offs_to_do = 1]"
   puts
   puts "note: if `character_id` is not specified, you will get a list of characters"
   puts "note: if `character_id` is specified but `scratch_offs_to_do` is not, only 1 scratch off will be done"

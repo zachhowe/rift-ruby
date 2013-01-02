@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require './lib/rift_client.rb'
+require_relative '../lib/rift_client'
 include Rift
 

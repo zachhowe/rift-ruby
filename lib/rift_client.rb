@@ -3,14 +3,14 @@ require 'uuid'
 require 'json/ext'
 require 'nokogiri'
 
-require './lib/rift_request.rb'
-require './lib/rift_character.rb'
+require_relative 'rift_request'
+require_relative 'rift_character'
 
 module Rift
   class RiftClient
     attr_accessor :ticket, :session_id
 
-    def initialize()
+    def initialize
       @proxify = Net::HTTP::Proxy('127.0.0.1', 8888)
     end
 
@@ -29,7 +29,7 @@ module Rift
       login
     end
 
-    def login()
+    def login
       uri = URI('https://chat-us.riftgame.com/chatservice/loginByTicket?os=iOS&osVersion=5.100000&vendor=Apple')
 
       uuid = UUID.new
@@ -51,7 +51,7 @@ module Rift
       end
     end
 
-    def characters()
+    def characters
       uri = URI('http://chat-us.riftgame.com:8080/chatservice/chat/characters')
 
       @proxify.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
@@ -80,7 +80,7 @@ module Rift
       end
     end
 
-    def cards()
+    def cards
       uri = URI('http://chat-us.riftgame.com:8080/chatservice/scratch/cards')
 
       @proxify.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https', :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
@@ -111,7 +111,7 @@ module Rift
 
         response = http.request request
 
-        url = get_url(response.body)
+        url = get_redeem_url(response.body)
 
         if !url.nil?
           if url.index('replayUUID').nil?
@@ -136,11 +136,14 @@ module Rift
 
         response = http.request request
 
+        # json = JSON::Ext::Parser.new(response.body)
+        # json_data = json.parse()
+        
         puts response.body
       end
     end
 
-    def get_url(html_doc)
+    def get_redeem_url(html_doc)
       doc = Nokogiri::HTML::Document.parse(html_doc)
 
       e = doc.xpath('//div[@id="reward-layer"]')

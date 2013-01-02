@@ -2,15 +2,15 @@ require 'net/http'
 
 module Rift
   class RiftRequest
-    @@session_id
+    attr_accessor :use_proxy, :proxy
 
     def initialize(url_string)
     end
 
-    def get()
+    def get
     end
 
-    def post()
+    def post(form_data)
     end
   end
 end
